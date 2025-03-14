@@ -1,4 +1,4 @@
-import { _decorator, CCInteger, Component, Node } from 'cc';
+import { _decorator, CCInteger, Component, Node, input, Input } from 'cc';
 import { Ground } from './Ground';
 const { ccclass, property } = _decorator;
 
@@ -29,10 +29,18 @@ export class GameCtrl extends Component {
     }
 
     initListener(){
-    
+        //input.on( Event, this.StartGame, this);
     }
 
     StartGame(){
+        
+    }
+
+    GameOver(){
+        
+    }
+
+    Restart(){
         
     }
 
