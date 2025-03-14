@@ -23,7 +23,18 @@ export class GameCtrl extends Component {
     })
     public speedPipe: number = 50;
 
+
+    onLoad(){
+
+    }
+
+    initListener(){
     
+    }
+
+    StartGame(){
+        
+    }
 
 }
 
