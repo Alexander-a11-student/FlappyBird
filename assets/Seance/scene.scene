@@ -821,15 +821,17 @@
     },
     "_enabled": true,
     "__prefab": null,
-    "ground1": {
-      "__id__": 12
-    },
-    "ground2": {
-      "__id__": 15
-    },
-    "ground3": {
-      "__id__": 18
-    },
+    "grounds": [
+      {
+        "__id__": 12
+      },
+      {
+        "__id__": 15
+      },
+      {
+        "__id__": 18
+      }
+    ],
     "gameSpeed": 100,
     "_id": "9bri6SbJBDLYTnTPll7Lin"
   },

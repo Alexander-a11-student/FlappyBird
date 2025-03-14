@@ -5,22 +5,10 @@ const { ccclass, property } = _decorator;
 export class Ground extends Component {
 
     @property({
-        type: Node,
-        tooltip: 'Ground 1'
+        type: [Node],
+        tooltip: 'Ground nodes'
     })
-    private ground1: Node = null;
-
-    @property({
-        type: Node,
-        tooltip: 'Ground 2'
-    })
-    private ground2: Node = null;
-
-    @property({
-        type: Node,
-        tooltip: 'Ground 3'
-    })
-    private ground3: Node = null;
+    private grounds: Node[] = [];
 
     @property({
         type: Number,
@@ -28,53 +16,40 @@ export class Ground extends Component {
     })
     private gameSpeed: number = 50;
 
-    private locationGround1 = new Vec3();
-    private locationGround2 = new Vec3();
-    private locationGround3 = new Vec3();
-
+    private locations: Vec3[] = [];
     private scene = null;
     private canvas = null;
-    private canvasWidth = null
-    private groudWidth: number = null;
+    private canvasWidth: number = null;
+    private groundWidth: number = null;
 
     onLoad() {
         this.StartUp();
     }
 
     StartUp() {
-        this.groudWidth = this.ground1.getComponent(UITransform).width;
         this.scene = director.getScene();
         this.canvas = this.scene.getComponentInChildren(Canvas);
         this.canvasWidth = this.canvas.getComponent(UITransform).width;
 
-        this.locationGround1.x = 0;
-        this.locationGround2.x = this.groudWidth;
-        this.locationGround3.x = this.groudWidth * 2;
+        if (this.grounds.length > 0) {
+            this.groundWidth = this.grounds[0].getComponent(UITransform).width;
+        }
+
+        for (let i = 0; i < this.grounds.length; i++) {
+            this.locations.push(new Vec3(i * this.groundWidth, 0, 0));
+        }
     }
 
     update(deltaTime: number) {
-        this.locationGround1.x = this.ground1.position.x;
-        this.locationGround2.x = this.ground2.position.x;
-        this.locationGround3.x = this.ground3.position.x;
+        for (let i = 0; i < this.grounds.length; i++) {
+            this.locations[i].x = this.grounds[i].position.x;
 
-        if (this.locationGround1.x <= -this.groudWidth) {
-            this.locationGround1.x += this.canvasWidth + this.groudWidth;
+            if (this.locations[i].x <= -this.groundWidth) {
+                this.locations[i].x += this.canvasWidth + this.groundWidth;
+            }
+
+            this.locations[i].x -= deltaTime * this.gameSpeed;
+            this.grounds[i].setPosition(this.locations[i]);
         }
-
-        if (this.locationGround2.x <= -this.groudWidth) {
-            this.locationGround2.x += this.canvasWidth + this.groudWidth;
-        }
-
-        if (this.locationGround3.x <= -this.groudWidth) {
-            this.locationGround3.x += this.canvasWidth + this.groudWidth;
-        }
-
-        this.locationGround1.x -= deltaTime * this.gameSpeed;
-        this.locationGround2.x -= deltaTime * this.gameSpeed;
-        this.locationGround3.x -= deltaTime * this.gameSpeed;
-
-        this.ground1.setPosition(this.locationGround1);
-        this.ground2.setPosition(this.locationGround2);
-        this.ground3.setPosition(this.locationGround3);
     }
 }
