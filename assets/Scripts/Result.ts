@@ -46,7 +46,7 @@ export class Result extends Component {
 
     showResults() {
         this.bestScoreValue = Math.max(this.bestScoreValue, this.currentScoreValue);
-        this.bestScore.string = this.bestScoreValue.toString();
+        this.bestScore.string = "Best Score: " + this.bestScoreValue.toString();
         
         this.restart.node.active = true;
         this.bestScore.node.active = true;
