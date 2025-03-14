@@ -1,5 +1,8 @@
-import { _decorator, Canvas, Component, director, Node, UITransform, Vec3 } from 'cc';
+import { _decorator, Canvas, Component, director, Game, Node, UITransform, Vec3 } from 'cc';
+import { GameCtrl } from './GameCtrl';
+
 const { ccclass, property } = _decorator;
+
 
 @ccclass('Ground')
 export class Ground extends Component {
@@ -10,11 +13,8 @@ export class Ground extends Component {
     })
     private grounds: Node[] = [];
 
-    @property({
-        type: Number,
-        tooltip: 'Game speed'
-    })
-    private gameSpeed: number = 50;
+
+    public gameCtrl = new GameCtrl
 
     private locations: Vec3[] = [];
     private scene = null;
@@ -41,6 +41,7 @@ export class Ground extends Component {
     }
 
     update(deltaTime: number) {
+        console.log(this.gameCtrl.speedGround);
         for (let i = 0; i < this.grounds.length; i++) {
             this.locations[i].x = this.grounds[i].position.x;
 
@@ -48,7 +49,7 @@ export class Ground extends Component {
                 this.locations[i].x += this.canvasWidth + this.groundWidth;
             }
 
-            this.locations[i].x -= deltaTime * this.gameSpeed;
+            this.locations[i].x -= deltaTime * this.gameCtrl.speedGround;
             this.grounds[i].setPosition(this.locations[i]);
         }
     }
