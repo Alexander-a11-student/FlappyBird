@@ -4,6 +4,8 @@ import { Result } from './Result';
 import { Bird } from './Bird';
 import { UIManager } from './UIManager';
 import { Pipes } from './Pipes';
+import { AudioCtrl } from './AudioCtrl';
+
 const { ccclass, property } = _decorator;
 
 @ccclass('GameCtrl')
@@ -34,6 +36,12 @@ export class GameCtrl extends Component {
     private ground: Ground;
 
     @property({
+        type: AudioCtrl,
+        tooltip: 'Audio Controller'
+    })
+    private audioCtrl: AudioCtrl;
+
+    @property({
         type: CCInteger,
         tooltip: 'speed ground node'
     })
@@ -59,19 +67,11 @@ export class GameCtrl extends Component {
     }
 
     initListener(){
-        input.on(Input.EventType.KEY_DOWN, this.GameState, this);
         Pipes.eventTarget.on('addScore', this.result.addScore, this.result);
         Pipes.eventTarget.on('collision', this.GameOver, this);
-        this.node.on(Node.EventType.TOUCH_START, () => { this.bird.fly(); });
+        this.node.on(Node.EventType.TOUCH_START, () => { this.bird.fly();  this.audioCtrl.onPlaySound(2); });
     }
 
-    GameState(event: EventKeyboard) {
-        switch (event.keyCode) {
-            case KeyCode.KEY_D:
-                this.GameOver();
-                break;
-        }
-    }
 
     onButtonClicked() {
         if (this.isButtonClicked) return; // Prevent multiple clicks
@@ -81,6 +81,13 @@ export class GameCtrl extends Component {
     }
 
     GameOver() {
+        this.audioCtrl.onPlaySound(0); //Звук удара
+        
+        this.scheduleOnce(() => {
+            this.audioCtrl.onPlaySound(1);; // Звук проигрыша
+        }, 0.5);
+
+
         this.result.showResults();
         this.uiManager.showStartUI();
         this.pipes.stopGame(); // Останавливаем движение труб

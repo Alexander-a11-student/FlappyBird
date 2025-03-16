@@ -2,9 +2,16 @@ import { _decorator, Component, Node, Vec3, EventTarget, Collider2D, ITriggerEve
 const { ccclass, property } = _decorator;
 
 import { Result } from './Result';
+import { AudioCtrl } from './AudioCtrl';
 
 @ccclass('Pipes')
 export class Pipes extends Component {
+    @property({
+        type: AudioCtrl,
+        tooltip: 'Audio Controller'
+    })
+    private audioCtrl: AudioCtrl;
+
     @property([Node])
     public pipes: Node[] = [];
 
@@ -44,7 +51,6 @@ export class Pipes extends Component {
     start() {
         this.resetPipes();
         this.pipePassedFlags = new Array(this.pipes.length).fill(true); // Инициализируем флаги
-
         // Добавляем обработчики триггерных событий для дочерних объектов труб
         for (const pipe of this.pipes) {
             for (const child of pipe.children) {
@@ -103,6 +109,9 @@ export class Pipes extends Component {
             const pipe = this.pipes[i];
             const posX = pipe.getPosition().x;
             if (posX < 0 && this.pipePassedFlags[i]) {
+
+                this.audioCtrl.onPlaySound(3); // Звук прохождения трубы
+                
                 this.pipePassedFlags[i] = false;
                 Pipes.eventTarget.emit('addScore');
                 this.currentRecord++;
