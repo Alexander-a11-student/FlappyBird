@@ -61,6 +61,7 @@ export class GameCtrl extends Component {
     initListener(){
         input.on(Input.EventType.KEY_DOWN, this.GameState, this);
         Pipes.eventTarget.on('addScore', this.result.addScore, this.result);
+        Pipes.eventTarget.on('collision', this.GameOver, this);
         this.node.on(Node.EventType.TOUCH_START, () => { this.bird.fly(); });
     }
 

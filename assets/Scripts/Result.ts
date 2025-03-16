@@ -21,7 +21,7 @@ export class Result extends Component {
     private restart: Label = null;
 
     private currentScoreValue: number = 0;
-    private bestScoreValue: number = 0;
+    public bestScoreValue: number = 0;
 
 
     updateScore(score: number) {
