@@ -13,13 +13,13 @@ export class Bird extends Component {
         type: CCFloat,
         tooltip: 'Jump force'
     })
-    private jumpForce: number = 3.5;
+    private jumpForce: number = 130;
 
     @property({
         type: CCFloat,
         tooltip: 'How long the bird will jump'
     })
-    private jumpDuration: number = 3.5;
+    private jumpDuration: number = 0.3;
 
 
     private birdPosition: Vec3;

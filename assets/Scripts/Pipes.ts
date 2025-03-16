@@ -65,9 +65,15 @@ export class Pipes extends Component {
     }
 
     clampY(y: number) {
-        return Math.max(this.minY, Math.min(this.maxY, y));
+        if (y<-300){
+            return -300;
+        } else if (y>100){
+            return 100;
+        } else {
+            return y;
+        }
     }
-
+    
     startGame() {
         this.isGameStarted = true;
     }

@@ -636,7 +636,7 @@
     "_enabled": true,
     "__prefab": null,
     "birdAnim": null,
-    "jumpForce": 100,
+    "jumpForce": 115,
     "jumpDuration": 0.3,
     "_id": "1aZ4YZLNBEP7103W7F6vEb"
   },
@@ -679,7 +679,7 @@
     "_group": 1,
     "_type": 2,
     "_allowSleep": true,
-    "_gravityScale": 4,
+    "_gravityScale": 5.1,
     "_linearDamping": 2,
     "_angularDamping": 0,
     "_linearVelocity": {
@@ -1361,7 +1361,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": -158.365,
+      "y": -150,
       "z": 0
     },
     "_lrot": {
@@ -1653,7 +1653,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": -158.365,
+      "y": -150,
       "z": 0
     },
     "_lrot": {
@@ -1945,7 +1945,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": -158.365,
+      "y": -150,
       "z": 0
     },
     "_lrot": {
@@ -2237,7 +2237,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": -158.365,
+      "y": -150,
       "z": 0
     },
     "_lrot": {
@@ -2529,7 +2529,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": -158.365,
+      "y": -150,
       "z": 0
     },
     "_lrot": {
@@ -2821,7 +2821,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": -158.365,
+      "y": -150,
       "z": 0
     },
     "_lrot": {
@@ -3117,7 +3117,7 @@
         "__id__": 73
       }
     ],
-    "pipeSpeed": 350,
+    "pipeSpeed": 310,
     "pipeInterval": 360,
     "minY": -100,
     "maxY": 100,
@@ -4002,7 +4002,7 @@
     "ground": {
       "__id__": 93
     },
-    "speedGround": 300,
+    "speedGround": 150,
     "speedPipe": null,
     "pipes": {
       "__id__": 81
