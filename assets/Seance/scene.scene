@@ -3152,6 +3152,10 @@
       {
         "__uuid__": "1c1065e9-8f61-4f5b-b7ea-9277f09f9d46",
         "__expectedType__": "cc.AudioClip"
+      },
+      {
+        "__uuid__": "a5e69f50-9f08-4f5b-bd20-1bce0a7275e8",
+        "__expectedType__": "cc.AudioClip"
       }
     ],
     "audioSource": {

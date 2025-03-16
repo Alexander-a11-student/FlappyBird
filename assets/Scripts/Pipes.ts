@@ -35,6 +35,7 @@ export class Pipes extends Component {
 
     private isGameStarted: boolean = false; // Флаг для отслеживания состояния игры
     private newRecord: boolean = false; // Флаг для отслеживания нового рекорда
+    private newRecordAudio: boolean = false; // Флаг для отслеживания нового рекорда
     private pipePassedFlags: boolean[] = []; // Флаги для отслеживания прохождения труб
     private recordPepe: Node;
 
@@ -131,6 +132,13 @@ export class Pipes extends Component {
                     this.resetPipeTextures();
                 }
 
+                if (this.currentRecord > this.bestRecord.bestScoreValue) {
+                    if (!this.newRecordAudio) {
+                        this.audioCtrl.onPlaySound(4); // Звук нового рекорда
+                        this.newRecordAudio = true; // Устанавливаем флаг для нового рекорда
+                    }
+                }
+
 
 
             } else if (posX >= 0) {
@@ -177,6 +185,7 @@ export class Pipes extends Component {
         this.currentRecord = 0;
         this.isGameStarted = false;
         this.newRecord = false;
+        this.newRecordAudio = false;
     }
 
     findRecordPipe(): Node | null {
