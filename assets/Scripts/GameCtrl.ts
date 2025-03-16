@@ -55,12 +55,12 @@ export class GameCtrl extends Component {
 
     onLoad(){
         this.initListener();
-        this.pipes.node.active = false; // Скрываем трубы при загрузке
+        this.pipes.node.active = false; // Показываем трубы
     }
 
     initListener(){
         input.on(Input.EventType.KEY_DOWN, this.GameState, this);
-
+        Pipes.eventTarget.on('addScore', this.result.addScore, this.result);
         this.node.on(Node.EventType.TOUCH_START, () => { this.bird.fly(); });
     }
 
@@ -68,13 +68,6 @@ export class GameCtrl extends Component {
         switch (event.keyCode) {
             case KeyCode.KEY_D:
                 this.GameOver();
-                break;
-            case KeyCode.KEY_S:
-                this.result.addScore();
-                this.bird.resetBird();
-                break;
-            case KeyCode.KEY_A:
-                this.Start();
                 break;
         }
     }

@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, Vec3, view } from 'cc';
+import { _decorator, Component, Node, Vec3, EventTarget } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass('Pipes')
@@ -19,15 +19,21 @@ export class Pipes extends Component {
     public maxY: number = 150;
 
     private isGameStarted: boolean = false; // Флаг для отслеживания состояния игры
+    public score: number = 0; // Добавляем свойство для хранения очков
+    private pipePassedFlags: boolean[] = []; // Флаги для отслеживания прохождения труб
+
+    public static eventTarget: EventTarget = new EventTarget();
 
     start() {
         this.resetPipes();
+        this.pipePassedFlags = new Array(this.pipes.length).fill(true); // Инициализируем флаги
     }
 
     update(deltaTime: number) {
         if (this.isGameStarted) {
             this.movePipes(deltaTime);
             this.checkPipes();
+            this.updateScore(); // Обновляем очки
         }
     }
 
@@ -60,6 +66,21 @@ export class Pipes extends Component {
         }
     }
 
+    updateScore() {
+        for (let i = 0; i < this.pipes.length; i++) {
+            const pipe = this.pipes[i];
+            const posX = pipe.getPosition().x;
+            if (posX < 0 && this.pipePassedFlags[i]) {
+                this.score += 1;
+                this.pipePassedFlags[i] = false;
+                console.log('Score:', this.score);
+                Pipes.eventTarget.emit('addScore');
+            } else if (posX >= 0) {
+                this.pipePassedFlags[i] = true;
+            }
+        }
+    }
+
     getRandomY() {
         return Math.random() * (this.maxY - this.minY) + this.minY;
     }
@@ -79,6 +100,7 @@ export class Pipes extends Component {
     }
 
     stopGame() {
+        this.score = 0;
         this.isGameStarted = false;
     }
 }
