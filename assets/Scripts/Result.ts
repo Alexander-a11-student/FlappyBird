@@ -37,6 +37,7 @@ export class Result extends Component {
     hideResults() {
         this.restart.node.active = false;
         this.bestScore.node.active = false;
+        this.scoreCurrent.node.active = true;
     }
 
     addScore() {
@@ -50,6 +51,7 @@ export class Result extends Component {
         
         this.restart.node.active = true;
         this.bestScore.node.active = true;
+        this.scoreCurrent.node.active = false;
     }
 
 }

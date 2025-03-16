@@ -41,7 +41,6 @@ export class Ground extends Component {
     }
 
     update(deltaTime: number) {
-        console.log(this.gameCtrl.speedGround);
         for (let i = 0; i < this.grounds.length; i++) {
             this.locations[i].x = this.grounds[i].position.x;
 

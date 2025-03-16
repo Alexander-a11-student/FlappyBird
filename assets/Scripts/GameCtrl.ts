@@ -1,28 +1,13 @@
-import { _decorator, CCInteger, Component, Node, input, Input, EventKeyboard, KeyCode } from 'cc';
+import { _decorator, CCInteger, Component, Node, input, Input, EventKeyboard, KeyCode, director } from 'cc';
 import { Ground } from './Ground';
 import { Result } from './Result';
+import { Bird } from './Bird';
+import { UIManager } from './UIManager';
+import { Pipes } from './Pipes';
 const { ccclass, property } = _decorator;
 
 @ccclass('GameCtrl')
 export class GameCtrl extends Component {
-
-    @property({
-        type: Ground,
-        tooltip: 'Ground nodes'
-    })
-    private ground: Ground = null;
-
-    @property({
-        type: CCInteger,
-        tooltip: 'speed ground node'
-    })
-    public speedGround: number = 50;
-
-    @property({
-        type: CCInteger,
-        tooltip: 'Pipe speed'
-    })
-    public speedPipe: number = 50;
 
     @property({
         type: Result,
@@ -30,36 +15,97 @@ export class GameCtrl extends Component {
     })
     private result: Result = null;
 
+    @property({
+        type: Bird,
+        tooltip: 'Bird node'
+    })
+    private bird: Bird = null;
+
+    @property({
+        type: UIManager,
+        tooltip: 'UI Manager'
+    })
+    private uiManager: UIManager;
+
+    @property({
+        type: Ground,
+        tooltip: 'Ground nodes'
+    })
+    private ground: Ground;
+
+    @property({
+        type: CCInteger,
+        tooltip: 'speed ground node'
+    })
+    public speedGround: number = 250;
+
+    @property({
+        type: CCInteger,
+        tooltip: 'Pipe speed'
+    })
+    public speedPipe: number = 250;
+
+    @property({
+        type: Pipes,
+        tooltip: 'Pipes node'
+    })
+    private pipes: Pipes = null;
+
+    private isButtonClicked: boolean = false; // Add this flag
 
     onLoad(){
         this.initListener();
+        this.pipes.node.active = false; // Скрываем трубы при загрузке
     }
 
     initListener(){
         input.on(Input.EventType.KEY_DOWN, this.GameState, this);
+
+        this.node.on(Node.EventType.TOUCH_START, () => { this.bird.fly(); });
     }
 
     GameState(event: EventKeyboard) {
         switch (event.keyCode) {
+            case KeyCode.KEY_D:
+                this.GameOver();
+                break;
+            case KeyCode.KEY_S:
+                this.result.addScore();
+                this.bird.resetBird();
+                break;
             case KeyCode.KEY_A:
                 this.Start();
                 break;
-            case KeyCode.KEY_B:
-                this.result.addScore();
-                break;
-            case KeyCode.KEY_C:
-                this.Restart();
         }
     }
 
-
-
-    Restart(){
-        this.result.showResults();    
+    onButtonClicked() {
+        if (this.isButtonClicked) return; // Prevent multiple clicks
+        console.log('Button clicked!');
+        this.isButtonClicked = true; // Set the flag
+        this.Start();
     }
 
-    Start(){
+    GameOver() {
+        this.result.showResults();
+        this.uiManager.showStartUI();
+        this.pipes.stopGame(); // Останавливаем движение труб
+        this.pipes.node.active = false; // Скрываем трубы
+        this.isButtonClicked = false; // Reset the flag
+        //director.pause();
+    }
+
+    Restart() {
         this.result.resetScrore();
+        director.resume();
+    }
+
+    Start() {
+        this.uiManager.hideStartUI();
+        this.pipes.resetPipes(); // Добавляем этот вызов
+        this.pipes.startGame(); // Запускаем движение труб
+        this.pipes.node.active = true; // Показываем трубы
+        this.Restart();
     }
 }
 
